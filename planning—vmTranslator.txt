@@ -1,0 +1,18 @@
+Proposed design ———— VM Translator
+
+Parser
+	Reads a VM command, parses command into components
+	Ignores all whitespace and comments
+
+	Constructor(input file): Opens input file and readies parsing
+	hasMoreCommands: Boolean (Are there more commands to be parsed)
+	advance: Reads next command and makes it current command. Only called if hasMoreCommands() === true.
+
+CodeWriter
+	Constructor(output file): Opens output file and readies writing
+	writeArithmetic(command): Writes assembly code implementing arithmetic command.
+	writePushPop(C_PUSH or C_POP, segment, index): Writes assembly code implementing push/pop command
+
+Main
+	Parse the input file with Parser
+	Write the assembly code with CodeWriter
