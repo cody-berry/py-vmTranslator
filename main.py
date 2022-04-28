@@ -7,10 +7,10 @@ code_writer = CodeWriter('StackArithmetic/StackTest/StackTest.asm')
 
 
 for code in parser.file:
-    print(parser.hasMoreLines())
-
-
-print(parser.file)
+    if parser.hasMoreLines():
+        command = parser.advance()
+        print(command)
+        print('----------------')
 
 
 

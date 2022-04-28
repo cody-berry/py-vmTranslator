@@ -1,14 +1,11 @@
 
 class Parser:
-    def __init__(self, fileName):
-        file = open(fileName, 'r')
+    def __init__(self, file_name):
+        file = open(file_name, 'r')
         self.file = []
-
-        print(file)
 
         for line in file:
             c = line
-            print(c)
 
             if (len(c) > 2 and c[0] != ' ' and c[0] != '/'):
                 self.file.append(c)
@@ -18,12 +15,13 @@ class Parser:
         self.lineNumber = -1
         self.lineContent = ' '
 
-
     def hasMoreLines(self):
+        return self.lineNumber < len(self.file)
+
+    def advance(self):
         self.lineNumber += 1
         print(self.lineNumber)
         self.lineContent = self.file[self.lineNumber]
         print(self.lineContent)
-        return self.lineNumber < len(self.file)
 
-
+        return self.lineContent.strip().split(' ')
