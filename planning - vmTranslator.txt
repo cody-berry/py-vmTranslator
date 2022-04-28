@@ -5,14 +5,67 @@ Parser
 	Ignores all whitespace and comments
 
 	Constructor(input file): Opens input file and readies parsing
+		this.file
+		this.lineNumber
+		this.currentLine
 	hasMoreCommands: Boolean (Are there more commands to be parsed)
 	advance: Reads next command and makes it current command. Only called if hasMoreCommands() === true.
+		increment lineNumber
+		make currentLine current line, deal with whitespace and comments
+		if push/pop at beginning:
+			get instances of whitespace in the middle, seperate and return
+		if arithmetic command:
+			return command
 
 CodeWriter
 	Constructor(output file): Opens output file and readies writing
 	writeArithmetic(command): Writes assembly code implementing arithmetic command.
-	writePushPop(C_PUSH or C_POP, segment, index): Writes assembly code implementing push/pop command
+		if command === 'add', 'sub', 'lt', 'gt', 'and', 'or', 'eq':
+			do operation on last two stack points using SP, use command
+				lt/gt/eq
+					@FALSE
+					RAM[RAM[SP]] - RAM[Ram[SP-1]]; J(capital of lt/gt/eq)
+					make value of stack true
+					goto STOP
+					(FALSE)
+					make value of stack false
+					(STOP)
+				and/or
+					use truth table to figure out
+			decrement SP
+		if command === 'not':
+			invert value using truth table
+
+	writePushPop(push/pop, segment, index): Writes assembly code implementing push/pop command
+		if push:
+			if segment = "constant":
+				D = index
+			if segment = "local/argument/this/that":
+				D = *(LCL/ARG/THIS/THAT + index)
+			if segment = "pointer":
+				D = THIS/THAT (pointer: 0/1), 3 + i
+			if segment = "temp":
+				D = RAM[5 + index]
+			write psuedocode in assembly: *SP = D
+			SP++
+		if pop:
+			SP--
+			if segment = "local/argument/this/that":
+				location = LCL/ARG/THIS/THAT + index
+			if segment = "temp":
+				location = 5 + index
+			if segment = "pointer":
+				location = 3 + index
+			write psuedocode in assembly: RAM[location] = *SP
+
+	close(): Closes output file.
+
+			
 
 Main
 	Parse the input file with Parser
 	Write the assembly code with CodeWriter
+
+Parser
+     handles the parsing of a single vm file
+        Reads a VM command and parses the commands into the components. Ignores all whitespace.

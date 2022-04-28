@@ -1,6 +1,6 @@
 
 class CodeWriter:
-    def __init__(self):
+    def __init__(self, filename):
         pass
 
 

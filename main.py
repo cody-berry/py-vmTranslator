@@ -1,10 +1,16 @@
-vm = open('StackArithmetic/StackTest/StackTest.vm', 'r')
-asm = open('StackArithmetic/StackTest/StackTest.asm', 'w')
+from CodeWriter import CodeWriter
+from Parser import Parser
 
 
-for code in vm:
-    print(vm.readline())
+parser = Parser('StackArithmetic/StackTest/StackTest.vm')
+code_writer = CodeWriter('StackArithmetic/StackTest/StackTest.asm')
 
+
+for code in parser.file:
+    print(parser.hasMoreLines())
+
+
+print(parser.file)
 
 
 
