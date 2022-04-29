@@ -5,7 +5,7 @@ D=M
 A=A-1
 D=D+M
 M=D
-// sub
+// sub 
 @SP
 AM=M-1
 D=M
@@ -19,7 +19,7 @@ D=M
 A=A-1
 D=D+M
 M=D
-// sub
+// sub 
 @SP
 AM=M-1
 D=M

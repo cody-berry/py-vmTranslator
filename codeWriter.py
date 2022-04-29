@@ -17,12 +17,19 @@ class CodeWriter:
     def __init__(self, file_name):
         self.file = open(file_name, 'w')
 
+    # write an arithmetic command like add or subtract
     def writeArithmetic(self, command):
         if command == 'add':
             self._writeAdd()
         if command == 'sub':
             self._writeSub()
+        if command == 'neg':
+            self._writeNeg()
+        if command == 'not':
+            self._writeNot()
 
+    # PROTECTED
+    # write an add command
     def _writeAdd(self):
         c = [
             "// add",
@@ -38,6 +45,8 @@ class CodeWriter:
             print(line)
             self.file.write(line + "\n")
 
+    # PROTECTED
+    # write a subtract command
     def _writeSub(self):
         c = [
             "// sub ",
@@ -53,3 +62,30 @@ class CodeWriter:
             print(line)
             self.file.write(line + "\n")
 
+    # PROTECTED
+    # write a neg command
+    def _writeNeg(self):
+        c = [
+            "// neg ",
+            "@SP",
+            "A=M-1",
+            "M=-M"
+        ]
+
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write a 'not' command
+    def _writeNot(self):
+        c = [
+            "// not ",
+            "@SP",
+            "A=M-1",
+            "M=!M"
+        ]
+
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
