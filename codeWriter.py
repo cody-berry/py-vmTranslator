@@ -177,6 +177,8 @@ class CodeWriter:
         if push_or_pop == 'push':
             if segment == 'constant':
                 self.writePushConstant(index)
+            if segment == 'static':
+                self.writePushStatic(index)
 
     # PROTECTED
     # write push constant i
@@ -188,6 +190,37 @@ class CodeWriter:
             "@SP",
             "M=M+1",
             "A=M-1",
+            "M=D"
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write push static i
+    def writePushStatic(self, i):
+        c = [
+            f"// push constant {i}",
+            f"@static.{i}",
+            "D=M",
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "M=D"
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write pop static i
+    def writePopStatic(self, i):
+        c = [
+            f"// push constant {i}",
+            "@SP",
+            "AM=M-1",
+            "D=M",
+            f"@static.{i}"
             "M=D"
         ]
         for line in c:
