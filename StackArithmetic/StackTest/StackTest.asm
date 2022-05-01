@@ -108,7 +108,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// eq
+// lt
 @SP
 AM=M-1
 D=M
@@ -140,7 +140,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// eq
+// lt
 @SP
 AM=M-1
 D=M
@@ -172,7 +172,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// eq
+// lt
 @SP
 AM=M-1
 D=M
@@ -204,7 +204,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// eq
+// gt
 @SP
 AM=M-1
 D=M
@@ -236,7 +236,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// eq
+// gt
 @SP
 AM=M-1
 D=M
@@ -268,7 +268,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// eq
+// gt
 @SP
 AM=M-1
 D=M
@@ -353,24 +353,6 @@ D=M
 A=A-1
 D=D|M
 M=D
-// eq
-@SP
-AM=M-1
-D=M
-A=A-1
-D=D-M
-@TRUE10
-D;JLT
-@SP
-A=M-1
-M=0
-@STOP10
-D;JMP
-(TRUE10)
-@SP
-A=M-1
-M=-1
-(STOP10)
 // not 
 @SP
 A=M-1

@@ -19,14 +19,32 @@ D=A
 M=M+1
 A=M-1
 M=D
-// push constant 3
+// pop static 8
+@SP
+AM=M-1
+D=M
+@static.8
+M=D
+// pop static 3
+@SP
+AM=M-1
+D=M
+@static.3
+M=D
+// pop static 1
+@SP
+AM=M-1
+D=M
+@static.1
+M=D
+// push static 3
 @static.3
 D=M
 @SP
 M=M+1
 A=M-1
 M=D
-// push constant 1
+// push static 1
 @static.1
 D=M
 @SP
@@ -38,9 +56,9 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 M=D
-// push constant 8
+// push static 8
 @static.8
 D=M
 @SP

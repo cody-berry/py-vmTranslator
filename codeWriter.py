@@ -1,16 +1,4 @@
-import enum
 
-
-class Command(enum.Enum):
-    C_ARITHMETIC = 1
-    C_PUSH = 2
-    C_POP = 3
-    C_LABEL = 4
-    C_GOTO = 5
-    C_IF = 6
-    C_FUNCTION = 7
-    C_RETURN = 8
-    C_CALL = 9
 
 
 class CodeWriter:
@@ -32,8 +20,10 @@ class CodeWriter:
             self._writeAnd()
         if command == 'or':
             self._writeOr()
-        if len(command) == 2:
-            operator = 0
+        if len(command) == 2 and command != 'or':
+            operator = ' '
+            if command == 'lt':
+                operator = 0
             if command == 'eq':
                 operator = 1
             if command == 'gt':
@@ -66,7 +56,7 @@ class CodeWriter:
             "AM=M-1",
             "D=M",
             "A=A-1",
-            "D=D-M",
+            "D=M-D",
             "M=D"
             ]
 
@@ -148,7 +138,7 @@ class CodeWriter:
             jump_type = "GT"
 
         c = [
-            "// eq",
+            "// " + jump_type.lower(),
             "@SP",
             "AM=M-1",
             "D=M",
@@ -179,6 +169,9 @@ class CodeWriter:
                 self.writePushConstant(index)
             if segment == 'static':
                 self.writePushStatic(index)
+        if push_or_pop == 'pop':
+            if segment == 'static':
+                self.writePopStatic(index)
 
     # PROTECTED
     # write push constant i
@@ -200,7 +193,7 @@ class CodeWriter:
     # write push static i
     def writePushStatic(self, i):
         c = [
-            f"// push constant {i}",
+            f"// push static {i}",
             f"@static.{i}",
             "D=M",
             "@SP",
@@ -216,11 +209,11 @@ class CodeWriter:
     # write pop static i
     def writePopStatic(self, i):
         c = [
-            f"// push constant {i}",
+            f"// pop static {i}",
             "@SP",
             "AM=M-1",
             "D=M",
-            f"@static.{i}"
+            f"@static.{i}",
             "M=D"
         ]
         for line in c:
