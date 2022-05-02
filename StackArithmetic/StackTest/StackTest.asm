@@ -17,7 +17,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE1
 D;JEQ
 @SP
@@ -49,7 +49,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE2
 D;JEQ
 @SP
@@ -81,7 +81,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE3
 D;JEQ
 @SP
@@ -113,7 +113,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE4
 D;JLT
 @SP
@@ -145,7 +145,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE5
 D;JLT
 @SP
@@ -177,7 +177,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE6
 D;JLT
 @SP
@@ -209,7 +209,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE7
 D;JGT
 @SP
@@ -241,7 +241,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE8
 D;JGT
 @SP
@@ -273,7 +273,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 @TRUE9
 D;JGT
 @SP
@@ -326,7 +326,7 @@ M=D
 AM=M-1
 D=M
 A=A-1
-D=D-M
+D=M-D
 M=D
 // neg 
 @SP

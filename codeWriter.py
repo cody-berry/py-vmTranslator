@@ -143,7 +143,7 @@ class CodeWriter:
             "AM=M-1",
             "D=M",
             "A=A-1",
-            "D=D-M",
+            "D=M-D",
             f"@TRUE{self.counter}",
             f"D;J{jump_type}",
             "@SP",

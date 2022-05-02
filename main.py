@@ -2,8 +2,8 @@ from CodeWriter import CodeWriter
 from Parser import Parser
 
 
-parser = Parser('MemoryAccess/StaticTest/StaticTest.vm')
-code_writer = CodeWriter('MemoryAccess/StaticTest/StaticTest.asm')
+parser = Parser('StackArithmetic/StackTest/StackTest.vm')
+code_writer = CodeWriter('StackArithmetic/StackTest/StackTest.asm')
 
 
 for code in parser.file:
