@@ -34,7 +34,7 @@ class Parser:
         self.lineContent = ' '
 
     def hasMoreLines(self):
-        return self.lineNumber < len(self.file)
+        return self.lineNumber < len(self.file) - 1
 
     def advance(self):
         self.lineNumber += 1
@@ -42,7 +42,40 @@ class Parser:
         self.lineContent = self.file[self.lineNumber]
         print(self.lineContent)
 
-        command = self.lineContent.strip().split(' ')
+    def commandType(self) -> Command:
+        command = self.lineContent.split(' ')
 
-        return command
+        print(command)
+
+        if command[0] in ['add\n', 'sub\n', 'neg\n', 'or\n', 'and\n', 'not\n', 'lt\n', 'eq\n', 'gt\n']:
+            return Command.C_ARITHMETIC
+        if command[0] == 'push':
+            return Command.C_PUSH
+        if command[0] == 'pop':
+            return Command.C_POP
+        if command[0] == 'label':
+            return Command.C_LABEL
+        if command[0] == 'goto':
+            return Command.C_GOTO
+        if command[0] == 'if':
+            return Command.C_IF
+        if command[0] == 'function':
+            return Command.C_FUNCTION
+        if command[0] == 'return\n':
+            return Command.C_RETURN
+        if command[0] == 'call':
+            return Command.C_CALL
+
+    def arg1(self) -> str:
+        command = self.lineContent.split(' ')
+        if len(command) == 1:
+            return self.lineContent
+        else:
+            return command[1]
+
+    def arg2(self) -> int:
+        command = self.lineContent.split()
+        return int(command[2])
+
+
 

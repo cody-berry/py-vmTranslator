@@ -4,29 +4,29 @@
 class CodeWriter:
     def __init__(self, file_name):
         self.file = open(file_name, 'w')
-        self.counter = 0
+        self.counter = -1
 
     # write an arithmetic command like add or subtract
     def writeArithmetic(self, command):
-        if command == 'add':
+        if command == 'add\n':
             self._writeAdd()
-        if command == 'sub':
+        if command == 'sub\n':
             self._writeSub()
-        if command == 'neg':
+        if command == 'neg\n':
             self._writeNeg()
-        if command == 'not':
+        if command == 'not\n':
             self._writeNot()
-        if command == 'and':
+        if command == 'and\n':
             self._writeAnd()
-        if command == 'or':
+        if command == 'or\n':
             self._writeOr()
-        if len(command) == 2 and command != 'or':
+        if len(command) == 3 and command != 'or\n':
             operator = ' '
-            if command == 'lt':
+            if command == 'lt\n':
                 operator = 0
-            if command == 'eq':
+            if command == 'eq\n':
                 operator = 1
-            if command == 'gt':
+            if command == 'gt\n':
                 operator = 2
             self._writeEqGtLt(operator)
 

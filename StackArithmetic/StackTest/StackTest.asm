@@ -18,6 +18,38 @@ AM=M-1
 D=M
 A=A-1
 D=M-D
+@TRUE0
+D;JEQ
+@SP
+A=M-1
+M=0
+@STOP0
+D;JMP
+(TRUE0)
+@SP
+A=M-1
+M=-1
+(STOP0)
+// push constant 17
+@17
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// push constant 16
+@16
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// eq
+@SP
+AM=M-1
+D=M
+A=A-1
+D=M-D
 @TRUE1
 D;JEQ
 @SP
@@ -30,15 +62,15 @@ D;JMP
 A=M-1
 M=-1
 (STOP1)
-// push constant 17
-@17
+// push constant 16
+@16
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// push constant 16
-@16
+// push constant 17
+@17
 D=A
 @SP
 M=M+1
@@ -62,28 +94,28 @@ D;JMP
 A=M-1
 M=-1
 (STOP2)
-// push constant 16
-@16
+// push constant 892
+@892
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// push constant 17
-@17
+// push constant 891
+@891
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// eq
+// lt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
 @TRUE3
-D;JEQ
+D;JLT
 @SP
 A=M-1
 M=0
@@ -94,15 +126,15 @@ D;JMP
 A=M-1
 M=-1
 (STOP3)
-// push constant 892
-@892
+// push constant 891
+@891
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// push constant 891
-@891
+// push constant 892
+@892
 D=A
 @SP
 M=M+1
@@ -133,8 +165,8 @@ D=A
 M=M+1
 A=M-1
 M=D
-// push constant 892
-@892
+// push constant 891
+@891
 D=A
 @SP
 M=M+1
@@ -158,28 +190,28 @@ D;JMP
 A=M-1
 M=-1
 (STOP5)
-// push constant 891
-@891
+// push constant 32767
+@32767
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// push constant 891
-@891
+// push constant 32766
+@32766
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// lt
+// gt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
 @TRUE6
-D;JLT
+D;JGT
 @SP
 A=M-1
 M=0
@@ -190,15 +222,15 @@ D;JMP
 A=M-1
 M=-1
 (STOP6)
-// push constant 32767
-@32767
+// push constant 32766
+@32766
 D=A
 @SP
 M=M+1
 A=M-1
 M=D
-// push constant 32766
-@32766
+// push constant 32767
+@32767
 D=A
 @SP
 M=M+1
@@ -229,8 +261,8 @@ D=A
 M=M+1
 A=M-1
 M=D
-// push constant 32767
-@32767
+// push constant 32766
+@32766
 D=A
 @SP
 M=M+1
@@ -254,38 +286,6 @@ D;JMP
 A=M-1
 M=-1
 (STOP8)
-// push constant 32766
-@32766
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-// push constant 32766
-@32766
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-// gt
-@SP
-AM=M-1
-D=M
-A=A-1
-D=M-D
-@TRUE9
-D;JGT
-@SP
-A=M-1
-M=0
-@STOP9
-D;JMP
-(TRUE9)
-@SP
-A=M-1
-M=-1
-(STOP9)
 // push constant 57
 @57
 D=A
