@@ -1,6 +1,4 @@
 
-
-
 class CodeWriter:
     def __init__(self, file_name):
         self.file = open(file_name, 'w')
@@ -166,24 +164,36 @@ class CodeWriter:
     def writePushPop(self, push_or_pop, segment, index):
         if push_or_pop == 'push':
             if segment == 'constant':
-                self.writePushConstant(index)
+                self._writePushConstant(index)
             if segment == 'static':
-                self.writePushStatic(index)
+                self._writePushStatic(index)
+            if segment == 'pointer':
+                self._writePushPointer(index)
+            if segment == 'this':
+                self._writePushThis(index)
+            if segment == 'that':
+                self._writePushThat(index)
         if push_or_pop == 'pop':
             if segment == 'static':
-                self.writePopStatic(index)
+                self._writePopStatic(index)
+            if segment == 'pointer':
+                self._writePopPointer(index)
+            if segment == 'this':
+                self._writePopThis(index)
+            if segment == 'that':
+                self._writePopThat(index)
 
     # PROTECTED
     # write push constant i
-    def writePushConstant(self, i):
+    def _writePushConstant(self, i):
         c = [
             f"// push constant {i}",
             f"@{i}",
-            "D=A",
+            "D=A",  # D=i
             "@SP",
-            "M=M+1",
-            "A=M-1",
-            "M=D"
+            "M=M+1",  # SP++
+            "A=M-1",  # A=originalSP
+            "M=D"  # RAM[SP] = i
         ]
         for line in c:
             print(line)
@@ -191,15 +201,15 @@ class CodeWriter:
 
     # PROTECTED
     # write push static i
-    def writePushStatic(self, i):
+    def _writePushStatic(self, i):
         c = [
             f"// push static {i}",
-            f"@static.{i}",
-            "D=M",
+            f"@static.{i}",  # access static i
+            "D=M",  # D = RAM[variable at i]
             "@SP",
-            "M=M+1",
-            "A=M-1",
-            "M=D"
+            "M=M+1",  # SP++
+            "A=M-1",  # A=originalSP
+            "M=D"  # RAM[SP] = i
         ]
         for line in c:
             print(line)
@@ -207,17 +217,46 @@ class CodeWriter:
 
     # PROTECTED
     # write pop static i
-    def writePopStatic(self, i):
+    def _writePopStatic(self, i):
         c = [
             f"// pop static {i}",
             "@SP",
-            "AM=M-1",
-            "D=M",
+            "AM=M-1",  # SP--, A=SP
+            "D=M",  # D=RAM[SP]
             f"@static.{i}",
-            "M=D"
+            "M=D"  # RAM[variable at i] = RAM[SP]
         ]
         for line in c:
             print(line)
             self.file.write(line + "\n")
 
+    # PROTECTED
+    # write push pointer i
+    def _writePushPointer(self, i):
+        c = [
+            f"// pop pointer {i}",
+            f"@{3 + i}",  # access THIS/THAT
+            "D=M",  # D=THIS/THAT
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "D=M",  # RAM[SP] = THIS/THAT
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
 
+    # PROTECTED
+    # write pop pointer i
+    def _writePopPointer(self, i):
+        c = [
+            f"// pop pointer {i}",
+            "@SP",
+            "AM=M-1",
+            "D=M",  # D=RAM[SP]
+            f"@{3 + i}",
+            "M=D"  # THIS/THAT = RAM[SP]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
