@@ -234,13 +234,13 @@ class CodeWriter:
     # write push pointer i
     def _writePushPointer(self, i):
         c = [
-            f"// pop pointer {i}",
+            f"// push pointer {i}",
             f"@{3 + i}",  # access THIS/THAT
             "D=M",  # D=THIS/THAT
             "@SP",
             "M=M+1",
             "A=M-1",
-            "D=M",  # RAM[SP] = THIS/THAT
+            "M=D",  # RAM[SP] = THIS/THAT
         ]
         for line in c:
             print(line)
@@ -256,6 +256,88 @@ class CodeWriter:
             "D=M",  # D=RAM[SP]
             f"@{3 + i}",
             "M=D"  # THIS/THAT = RAM[SP]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write push this i
+    def _writePushThis(self, i):
+        c = [
+            f"// push this {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            f"@THIS",  # access THIS
+            "A=D+M",
+            "D=M",  # D=*THIS
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "M=D",  # RAM[SP] = THIS
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write pop this i
+    def _writePopThis(self, i):
+        c = [
+            f"// pop this {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            "@THIS",
+            "D=D+M",  # D = RAM[THIS] + i
+            "@ad",
+            "M=D",  # address = RAM[THIS] + i
+            "@SP",
+            "AM=M-1",
+            "D=M",  # D=RAM[SP]
+            "@ad",
+            "A=M",  # A = RAM[THIS] + i
+            "M=D",  # RAM[RAM[THIS] + i] = RAM[SP]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write push that i
+    def _writePushThat(self, i):
+        c = [
+            f"// push that {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            f"@THAT",  # access THAT
+            "A=D+M",
+            "D=M",  # D=*THAT
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "M=D",  # RAM[SP] = THAT
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write pop that i
+    def _writePopThat(self, i):
+        c = [
+            f"// pop that {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            "@THAT",
+            "D=D+M",  # D = RAM[THAT] + i
+            "@ad",
+            "M=D",  # address = RAM[THAT] + i
+            "@SP",
+            "AM=M-1",
+            "D=M",  # D=RAM[SP]
+            "@ad",
+            "A=M",  # A = RAM[THAT] + i
+            "M=D",  # RAM[RAM[THAT] + i] = RAM[SP]
         ]
         for line in c:
             print(line)
