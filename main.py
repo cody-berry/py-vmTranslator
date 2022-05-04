@@ -2,8 +2,8 @@ from CodeWriter import *
 from Parser import *
 
 
-parser = Parser('MemoryAccess/PointerTest/PointerTest.vm')
-code_writer = CodeWriter('MemoryAccess/PointerTest/PointerTest.asm')
+parser = Parser('MemoryAccess/BasicTest/BasicTest.vm')
+code_writer = CodeWriter('MemoryAccess/BasicTest/BasicTest.asm')
 
 
 while parser.hasMoreLines():

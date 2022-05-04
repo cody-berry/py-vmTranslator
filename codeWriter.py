@@ -173,6 +173,12 @@ class CodeWriter:
                 self._writePushThis(index)
             if segment == 'that':
                 self._writePushThat(index)
+            if segment == 'local':
+                self._writePushLocal(index)
+            if segment == 'argument':
+                self._writePushArgument(index)
+            if segment == 'temp':
+                self._writePushTemp(index)
         if push_or_pop == 'pop':
             if segment == 'static':
                 self._writePopStatic(index)
@@ -182,6 +188,13 @@ class CodeWriter:
                 self._writePopThis(index)
             if segment == 'that':
                 self._writePopThat(index)
+            if segment == 'local':
+                self._writePopLocal(index)
+            if segment == 'argument':
+                self._writePopArgument(index)
+            if segment == 'temp':
+                self._writePopTemp(index)
+
 
     # PROTECTED
     # write push constant i
@@ -256,6 +269,37 @@ class CodeWriter:
             "D=M",  # D=RAM[SP]
             f"@{3 + i}",
             "M=D"  # THIS/THAT = RAM[SP]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write push pointer i
+    def _writePushTemp(self, i):
+        c = [
+            f"// push temp {i}",
+            f"@{5 + i}",  # access RAM[5-12]
+            "D=M",  # D=RAM[5-12]
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "M=D",  # RAM[SP] = RAM[5-12]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write pop pointer i
+    def _writePopTemp(self, i):
+        c = [
+            f"// pop temp {i}",
+            "@SP",
+            "AM=M-1",
+            "D=M",  # D=RAM[SP]
+            f"@{5 + i}",
+            "M=D"  # RAM[5-12] = RAM[SP]
         ]
         for line in c:
             print(line)
@@ -338,6 +382,88 @@ class CodeWriter:
             "@ad",
             "A=M",  # A = RAM[THAT] + i
             "M=D",  # RAM[RAM[THAT] + i] = RAM[SP]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write push local i
+    def _writePushLocal(self, i):
+        c = [
+            f"// push local {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            f"@LCL",  # access LCL
+            "A=D+M",
+            "D=M",  # D=*LCL
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "M=D",  # RAM[SP] = LCL
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write pop local i
+    def _writePopLocal(self, i):
+        c = [
+            f"// pop local {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            "@LCL",
+            "D=D+M",  # D = RAM[LCL] + i
+            "@ad",
+            "M=D",  # address = RAM[LCL] + i
+            "@SP",
+            "AM=M-1",
+            "D=M",  # D=RAM[SP]
+            "@ad",
+            "A=M",  # A = RAM[LCL] + i
+            "M=D",  # RAM[RAM[LCL] + i] = RAM[SP]
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write push argument i
+    def _writePushArgument(self, i):
+        c = [
+            f"// push argument {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            f"@ARG",  # access ARG
+            "A=D+M",
+            "D=M",  # D=*ARG
+            "@SP",
+            "M=M+1",
+            "A=M-1",
+            "M=D",  # RAM[SP] = ARG
+        ]
+        for line in c:
+            print(line)
+            self.file.write(line + "\n")
+
+    # PROTECTED
+    # write pop argument i
+    def _writePopArgument(self, i):
+        c = [
+            f"// pop argument {i}",
+            f"@{i}",
+            "D=A",  # D=i
+            "@ARG",
+            "D=D+M",  # D = RAM[ARG] + i
+            "@ad",
+            "M=D",  # address = RAM[ARG] + i
+            "@SP",
+            "AM=M-1",
+            "D=M",  # D=RAM[SP]
+            "@ad",
+            "A=M",  # A = RAM[ARG] + i
+            "M=D",  # RAM[RAM[ARG] + i] = RAM[SP]
         ]
         for line in c:
             print(line)
